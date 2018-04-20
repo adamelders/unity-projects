@@ -95,4 +95,23 @@ public class GameManager : MonoBehaviour {
         // Disable the game over menu.
         gameOverMenu.SetActive(false);
     }
+
+    // Player has clicked Main Menu after game over.
+    public void ShowMainMenu() {
+
+        // Set game restarted to reset Player and Rock positions.
+        gameRestarted = true;
+
+        // Reset variables.
+        gameOver = false;
+        playerActive = false;
+        gameStarted = false;
+
+        // Disable the game over menu.
+        gameOverMenu.SetActive(false);
+
+        // Enable the main menu.
+        mainMenu.SetActive(true);
+
+    }
 }

@@ -39,6 +39,7 @@ public class Rock : Platform {
         }
     }
 
+    // Reset Rock positions when the player restarts the game.
     private void ResetRocks() {
 
         // Reset rock positions.
