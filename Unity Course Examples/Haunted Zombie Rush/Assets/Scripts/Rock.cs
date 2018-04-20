@@ -15,8 +15,12 @@ public class Rock : Platform {
     // Update is called once per fram
     protected override void Update() {
 
-        // Move the Rock along with the platform
-        base.Update();
+        // If the player is not active, the rocks should not move.
+        if (GameManager.instance.PlayerActive) {
+
+            // Move the Rock along with the platform
+            base.Update();
+        }
     }
 
     // Coroutine to move the rock up and down.
