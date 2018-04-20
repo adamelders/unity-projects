@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
     private Rigidbody rigidBody;
     private bool jump = false;
     private AudioSource audioSource;
+    private Vector3 originalPostion;
 
     // Awake is called before Start
     private void Awake() {
@@ -18,6 +19,9 @@ public class Player : MonoBehaviour {
         // Use assertions to make sure that the sound effects are not null.
         Assert.IsNotNull(sfxJump);
         Assert.IsNotNull(sfxDeath);
+
+        // Set the original position so we can reset it.
+        originalPostion = gameObject.transform.position;
     }
 
     // Initialize by getting the Animator, Rigidbody, and AudioSource of the Player object.
@@ -30,8 +34,12 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        // Do not allow jumping if the game is over.
-        if (!GameManager.instance.GameOver) {
+        // Reset player position if the game is restarted.
+        if (GameManager.instance.GameRestarted)
+            ResetPlayer();
+
+        // Do not allow jumping if the game is over or hasn't started yet.
+        if (!GameManager.instance.GameOver && GameManager.instance.GameStarted) {
 
             // On left click (or touch)
             if (Input.GetMouseButtonDown(0)) {
@@ -75,8 +83,8 @@ public class Player : MonoBehaviour {
     // Called when any collision is detected, if detectCollisions on the object is true.
     private void OnCollisionEnter(Collision collision) {
 
-        // Player dies if they collide with an obstacle.
-        if (collision.gameObject.tag == "obstacle") {
+        // Player dies if they collide with an obstacle or the platform.
+        if (collision.gameObject.tag == "obstacle" || collision.gameObject.tag == "platform") {
             
             // Apply force to the player to knock them back on death.
             rigidBody.AddForce(new Vector2(50, 20), ForceMode.Impulse);
@@ -90,5 +98,21 @@ public class Player : MonoBehaviour {
             // End the game.
             GameManager.instance.PlayerCollided();
         }
+    }
+
+    public void ResetPlayer() {
+
+        // Disable gravity on Player.
+        rigidBody.useGravity = false;
+
+        // Re-activate collision detection on Player.
+        rigidBody.detectCollisions = true;
+
+        // Reset Player position and velocity.
+        gameObject.transform.position = originalPostion;
+        //transform.localRotation.
+        rigidBody.velocity = new Vector2(0, 0);
+
+        GameManager.instance.GameRestarted = false;
     }
 }

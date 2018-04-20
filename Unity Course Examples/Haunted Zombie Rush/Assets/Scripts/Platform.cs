@@ -9,8 +9,8 @@ public class Platform : MonoBehaviour {
 	// Update is called once per frame
 	protected virtual void Update () {
 
-        // If the game is over, don't move any objects.
-        if (!GameManager.instance.GameOver) {
+        // If the game is over, or the game hasn't started, don't move any objects.
+        if (!GameManager.instance.GameOver || GameManager.instance.GameStarted) {
 
             // Move the platform left at objectSpeed.
             transform.Translate(Vector3.left * (objectSpeed * Time.deltaTime));
