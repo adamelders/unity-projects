@@ -108,11 +108,13 @@ public class Player : MonoBehaviour {
         // Re-activate collision detection on Player.
         rigidBody.detectCollisions = true;
 
-        // Reset Player position and velocity.
+        // Reset Player position, rotation, and velocity.
         gameObject.transform.position = originalPostion;
-        //transform.localRotation.
+        gameObject.transform.rotation = Quaternion.Euler(0, -60, 0);
         rigidBody.velocity = new Vector2(0, 0);
+        rigidBody.angularVelocity = Vector3.zero;
 
-        GameManager.instance.GameRestarted = false;
+        // Tell GameManager that Player is reset.
+        GameManager.instance.PlayerReset = true;
     }
 }

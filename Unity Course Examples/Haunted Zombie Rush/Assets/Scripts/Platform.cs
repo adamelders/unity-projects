@@ -12,8 +12,13 @@ public class Platform : MonoBehaviour {
         // If the game is over, or the game hasn't started, don't move any objects.
         if (!GameManager.instance.GameOver || GameManager.instance.GameStarted) {
 
+            // Workaround because if I rotate the coin, it's blank on the other side.
+            if (gameObject.tag == "coin")
+                transform.Translate(Vector3.right * (objectSpeed * Time.deltaTime));
+
             // Move the platform left at objectSpeed.
-            transform.Translate(Vector3.left * (objectSpeed * Time.deltaTime));
+            else
+                transform.Translate(Vector3.left * (objectSpeed * Time.deltaTime));
 
             // When the first platform reaches a certain position on the X axis (off the screen),
             // we need to move that platform back to the right side, to make the platform seem never-ending.

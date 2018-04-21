@@ -15,7 +15,7 @@ public class Rock : Platform {
     // Use this for initialization
     void Start () {
 
-        // Store the rock positions for restting later.
+        // Store the rock positions for resetting later.
         rocks = GameObject.FindGameObjectsWithTag("obstacle");
         rock1OriginalPosition = rocks[0].transform.position;
         rock2OriginalPosition = rocks[1].transform.position;
@@ -46,6 +46,9 @@ public class Rock : Platform {
         rocks[0].transform.position = rock1OriginalPosition;
         rocks[1].transform.position = rock2OriginalPosition;
         rocks[2].transform.position = rock3OriginalPosition;
+
+        // Tell GameManager that Rocks are reset.
+        GameManager.instance.RocksReset = true;
     }
 
     // Coroutine to move the rock up and down.

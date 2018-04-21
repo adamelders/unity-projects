@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour {
     private bool gameOver = false;
     private bool gameStarted = false;
     private bool gameRestarted = false;
+    private bool coinSpawningStarted = false;
+    private bool playerReset = false;
+    private bool rocksReset = false;
+    private bool coinsReset = false;
     
     public bool PlayerActive {
         get {
@@ -43,6 +47,54 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public bool CoinSpawningStarted {
+        get {
+            return coinSpawningStarted;
+        }
+        set {
+
+            // Do not set if the value is already the same.
+            if (coinSpawningStarted != value)
+                coinSpawningStarted = value;
+        }
+    }
+
+    public bool PlayerReset {
+        get {
+            return playerReset;
+        }
+        set {
+
+            // Do not set if the value is already the same.
+            if (playerReset != value)
+                playerReset = value;
+        }
+    }
+
+    public bool RocksReset {
+        get {
+            return rocksReset;
+        }
+        set {
+
+            // Do not set if the value is already the same.
+            if (rocksReset != value)
+                rocksReset = value;
+        }
+    }
+
+    public bool CoinsReset {
+        get {
+            return coinsReset;
+        }
+        set {
+
+            // Do not set if the value is already the same.
+            if (coinsReset != value)
+                coinsReset = value;
+        }
+    }
+
     private void Awake() {
 
         // Make sure there is only one instance of GameManager running.
@@ -57,6 +109,18 @@ public class GameManager : MonoBehaviour {
 
         Assert.IsNotNull(mainMenu);
         Assert.IsNotNull(gameOverMenu);
+    }
+
+    private void Update() {
+
+        // Set "reset" values to false to make sure everything gets
+        // reset before starting a new game.
+        if (PlayerReset && RocksReset && CoinsReset) {
+            gameRestarted = false;
+            PlayerReset = false;
+            RocksReset = false;
+            CoinsReset = false;
+        }
     }
 
     // Player has collided with a rock, set game over.
@@ -91,6 +155,7 @@ public class GameManager : MonoBehaviour {
         // Reset variables.
         gameOver = false;
         playerActive = false;
+        coinSpawningStarted = false;
 
         // Disable the game over menu.
         gameOverMenu.SetActive(false);
