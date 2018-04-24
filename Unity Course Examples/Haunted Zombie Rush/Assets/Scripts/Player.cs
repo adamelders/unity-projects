@@ -34,10 +34,6 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        // Reset player position if the game is restarted.
-        if (GameManager.instance.GameRestarted)
-            ResetPlayer();
-
         // Do not allow jumping if the game is over or hasn't started yet.
         if (!GameManager.instance.GameOver && GameManager.instance.GameStarted) {
 
@@ -113,8 +109,5 @@ public class Player : MonoBehaviour {
         gameObject.transform.rotation = Quaternion.Euler(0, -60, 0);
         rigidBody.velocity = new Vector2(0, 0);
         rigidBody.angularVelocity = Vector3.zero;
-
-        // Tell GameManager that Player is reset.
-        GameManager.instance.PlayerReset = true;
     }
 }

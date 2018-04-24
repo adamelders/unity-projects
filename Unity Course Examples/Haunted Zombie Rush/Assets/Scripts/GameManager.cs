@@ -7,15 +7,13 @@ public class GameManager : MonoBehaviour {
 
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject gameOverMenu;
+    private GameObject[] rocks;
+    private Vector3[] rockPositions;
 
     private bool playerActive = false;
     private bool gameOver = false;
     private bool gameStarted = false;
-    private bool gameRestarted = false;
     private bool coinSpawningStarted = false;
-    private bool playerReset = false;
-    private bool rocksReset = false;
-    private bool coinsReset = false;
     
     public bool PlayerActive {
         get {
@@ -35,18 +33,6 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public bool GameRestarted {
-        get {
-            return gameRestarted;
-        }
-        set {
-
-            // Do not set if the value is already the same.
-            if (gameRestarted != value)
-                gameRestarted = value;
-        }
-    }
-
     public bool CoinSpawningStarted {
         get {
             return coinSpawningStarted;
@@ -56,42 +42,6 @@ public class GameManager : MonoBehaviour {
             // Do not set if the value is already the same.
             if (coinSpawningStarted != value)
                 coinSpawningStarted = value;
-        }
-    }
-
-    public bool PlayerReset {
-        get {
-            return playerReset;
-        }
-        set {
-
-            // Do not set if the value is already the same.
-            if (playerReset != value)
-                playerReset = value;
-        }
-    }
-
-    public bool RocksReset {
-        get {
-            return rocksReset;
-        }
-        set {
-
-            // Do not set if the value is already the same.
-            if (rocksReset != value)
-                rocksReset = value;
-        }
-    }
-
-    public bool CoinsReset {
-        get {
-            return coinsReset;
-        }
-        set {
-
-            // Do not set if the value is already the same.
-            if (coinsReset != value)
-                coinsReset = value;
         }
     }
 
@@ -109,17 +59,13 @@ public class GameManager : MonoBehaviour {
 
         Assert.IsNotNull(mainMenu);
         Assert.IsNotNull(gameOverMenu);
-    }
 
-    private void Update() {
+        // Store rock positions.
+        this.rocks = GameObject.FindGameObjectsWithTag("obstacle");
+        this.rockPositions = new Vector3[3];
 
-        // Set "reset" values to false to make sure everything gets
-        // reset before starting a new game.
-        if (PlayerReset && RocksReset && CoinsReset) {
-            gameRestarted = false;
-            PlayerReset = false;
-            RocksReset = false;
-            CoinsReset = false;
+        for (int i = 0; i < rocks.Length; i++) {
+            this.rockPositions[i] = rocks[i].transform.position;
         }
     }
 
@@ -149,8 +95,14 @@ public class GameManager : MonoBehaviour {
     // Player has clicked Restart after game over.
     public void RestartGame() {
 
-        // Set game restarted to reset Player and Rock positions.
-        gameRestarted = true;
+        // Reset Rocks.
+        this.ResetRocks();
+
+        // Reset Player.
+        this.ResetPlayer();
+
+        // Reset Coins.
+        this.ResetCoins();
 
         // Reset variables.
         gameOver = false;
@@ -164,8 +116,14 @@ public class GameManager : MonoBehaviour {
     // Player has clicked Main Menu after game over.
     public void ShowMainMenu() {
 
-        // Set game restarted to reset Player and Rock positions.
-        gameRestarted = true;
+        // Reset Rocks.
+        this.ResetRocks();
+
+        // Reset Player.
+        this.ResetPlayer();
+
+        // Reset Coins.
+        this.ResetCoins();
 
         // Reset variables.
         gameOver = false;
@@ -178,5 +136,28 @@ public class GameManager : MonoBehaviour {
         // Enable the main menu.
         mainMenu.SetActive(true);
 
+    }
+
+    private void ResetRocks() {
+
+        // Reset Rocks to original positions.
+        for (int i = 0; i < rocks.Length; i++) {
+            rocks[i].transform.position = rockPositions[i];
+        }
+    }
+
+    private void ResetPlayer() {
+
+        // Reset Player to original position.
+        Player player = FindObjectOfType<Player>();
+        player.ResetPlayer();
+    }
+
+    private void ResetCoins() {
+
+        // Find all Coin objects and destroy them.
+        GameObject[] coins = GameObject.FindGameObjectsWithTag("coin");
+        foreach (GameObject coin in coins)
+            Destroy(coin);
     }
 }

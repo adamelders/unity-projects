@@ -7,29 +7,15 @@ public class Rock : Platform {
     [SerializeField] Vector3 bottomPosition;
     [SerializeField] float speed;
 
-    private GameObject[] rocks;
-    private Vector3 rock1OriginalPosition;
-    private Vector3 rock2OriginalPosition;
-    private Vector3 rock3OriginalPosition;
-
     // Use this for initialization
     void Start () {
 
-        // Store the rock positions for resetting later.
-        rocks = GameObject.FindGameObjectsWithTag("obstacle");
-        rock1OriginalPosition = rocks[0].transform.position;
-        rock2OriginalPosition = rocks[1].transform.position;
-        rock3OriginalPosition = rocks[2].transform.position;
-
+        // Start moving rocks.
         StartCoroutine(Move(bottomPosition));
 	}
 
     // Update is called once per frame
     protected override void Update() {
-
-        // If the game has been restarted, reset the rock positions.
-        if (GameManager.instance.GameRestarted)
-            ResetRocks();
 
         // If the player is not active, the rocks should not move.
         if (GameManager.instance.PlayerActive) {
@@ -37,18 +23,6 @@ public class Rock : Platform {
             // Move the Rock along with the platform
             base.Update();
         }
-    }
-
-    // Reset Rock positions when the player restarts the game.
-    private void ResetRocks() {
-
-        // Reset rock positions.
-        rocks[0].transform.position = rock1OriginalPosition;
-        rocks[1].transform.position = rock2OriginalPosition;
-        rocks[2].transform.position = rock3OriginalPosition;
-
-        // Tell GameManager that Rocks are reset.
-        GameManager.instance.RocksReset = true;
     }
 
     // Coroutine to move the rock up and down.

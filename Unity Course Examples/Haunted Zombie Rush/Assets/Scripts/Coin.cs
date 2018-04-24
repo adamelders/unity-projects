@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Coin : Platform {
 
@@ -7,20 +6,6 @@ public class Coin : Platform {
 
     // Update is called once per frame
     protected override void Update () {
-
-        // Destroy all coins if the game is restarted.
-        if (GameManager.instance.GameRestarted) {
-            GameObject[] coins = GameObject.FindGameObjectsWithTag("coin");
-            foreach (GameObject coin in coins) {
-                Destroy(coin);
-            }
-
-            // Tell GameManager that Coins are reset.
-            GameManager.instance.CoinsReset = true;
-
-            // Reset coin spawning.
-            GameManager.instance.CoinSpawningStarted = false;
-        }
 
         // If the player is not active, the coins should not move.
         if (GameManager.instance.PlayerActive) {
