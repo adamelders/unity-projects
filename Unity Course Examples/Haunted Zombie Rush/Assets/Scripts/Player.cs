@@ -6,6 +6,7 @@ public class Player : MonoBehaviour {
     [SerializeField] private float jumpForce = 100f;
     [SerializeField] private AudioClip sfxJump;
     [SerializeField] private AudioClip sfxDeath;
+    [SerializeField] private AudioClip sfxCoin;
 
     private Animator anim;
     private Rigidbody rigidBody;
@@ -93,6 +94,23 @@ public class Player : MonoBehaviour {
 
             // End the game.
             GameManager.instance.PlayerCollided();
+        }
+    }
+
+    // Triggered when the Player enters a coin collider.
+    private void OnTriggerEnter(Collider coin) {
+
+        // If the gameobject is a coin, add to the player score.
+        if (coin.gameObject.tag == "coin") {
+
+            // Play coin sound effect.
+            audioSource.PlayOneShot(sfxCoin);
+
+            // Increment player score.
+            GameManager.instance.PlayerScore++;
+
+            // Destroy coin.
+            Destroy(coin.gameObject);
         }
     }
 
