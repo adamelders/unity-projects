@@ -1,21 +1,19 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager> {
 
-    public static GameManager instance = null;
-    public GameObject spawnPoint;
-    public GameObject[] enemies;
-    public int maxEnemiesOnScreen;
-    public int totalEnemies;
-    public int enemiesPerSpawn;
-    public float spawnDelay;
+    [SerializeField] private int maxEnemiesOnScreen;
+    [SerializeField] private int totalEnemies;
+    [SerializeField] private int enemiesPerSpawn;
+    [SerializeField] private float spawnDelay;
 
+    private GameObject spawnPoint;
+    private GameObject[] enemies;
     private int enemiesOnScreen = 0;
 
     // Use this for initialization
-    void Start () {
+    private void Start () {
         StartCoroutine(Spawn());
 	}
 

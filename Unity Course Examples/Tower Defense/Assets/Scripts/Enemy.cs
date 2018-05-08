@@ -1,24 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
-    public int target = 0;
-    public Transform exitPoint;
-    public Transform[] waypoints;
-    public float navigationUpdate;
+    [SerializeField] private Transform exitPoint;
+    [SerializeField] private Transform[] waypoints;
+    [SerializeField] private float navigationUpdate;
 
+    private int target = 0;
     private Transform enemy;
     private float navigationTime = 0;
 
 	// Use this for initialization
-	void Start () {
+	private void Start () {
         enemy = GetComponent<Transform>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	private void Update () {
         if (waypoints != null) {
             navigationTime += Time.deltaTime;
             
