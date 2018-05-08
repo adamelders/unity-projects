@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : Singleton<GameManager> {
 
     public static GameManager instance = null;
     public GameObject spawnPoint;
@@ -13,15 +13,6 @@ public class GameManager : MonoBehaviour {
     public float spawnDelay;
 
     private int enemiesOnScreen = 0;
-
-    private void Awake() {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
-
-        DontDestroyOnLoad(gameObject);
-    }
 
     // Use this for initialization
     void Start () {
