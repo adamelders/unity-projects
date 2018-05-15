@@ -7,9 +7,9 @@ public class GameManager : Singleton<GameManager> {
     [SerializeField] private int totalEnemies;
     [SerializeField] private int enemiesPerSpawn;
     [SerializeField] private float spawnDelay;
+    [SerializeField] private GameObject spawnPoint;
+    [SerializeField] private GameObject[] enemies;
 
-    private GameObject spawnPoint;
-    private GameObject[] enemies;
     private int enemiesOnScreen = 0;
 
     // Use this for initialization
