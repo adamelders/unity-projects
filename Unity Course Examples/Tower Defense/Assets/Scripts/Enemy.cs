@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour {
 	// Use this for initialization
 	private void Start () {
         enemy = GetComponent<Transform>();
+        GameManager.Instance.RegisterEnemy(this);
 	}
 	
 	// Update is called once per frame
@@ -37,8 +38,7 @@ public class Enemy : MonoBehaviour {
         if (other.tag == "Checkpoint")
             target++;
         else if (other.tag == "Finish") {
-            GameManager.Instance.RemoveEnemyFromScreen();
-            Destroy(gameObject);
+            GameManager.Instance.UnregisterEnemy(this);
         }
     }
 }

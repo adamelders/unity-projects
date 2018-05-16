@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager> {
@@ -10,26 +11,36 @@ public class GameManager : Singleton<GameManager> {
     [SerializeField] private GameObject spawnPoint;
     [SerializeField] private GameObject[] enemies;
 
-    private int enemiesOnScreen = 0;
+    public List<Enemy> enemyList = new List<Enemy>();
 
     // Use this for initialization
     private void Start () {
         StartCoroutine(Spawn());
 	}
 
-    public void RemoveEnemyFromScreen() {
-        if (enemiesOnScreen > 0)
-            enemiesOnScreen--;
+    public void RegisterEnemy(Enemy enemy) {
+        enemyList.Add(enemy);
+    }
+
+    public void UnregisterEnemy(Enemy enemy) {
+        enemyList.Remove(enemy);
+        Destroy(enemy.gameObject);
+    }
+
+    public void DestroyAllEnemies() {
+        foreach (Enemy enemy in enemyList)
+            Destroy(enemy.gameObject);
+
+        enemyList.Clear();
     }
 
     IEnumerator Spawn() {
-        if (enemiesPerSpawn > 0 && enemiesOnScreen < totalEnemies) {
+        if (enemiesPerSpawn > 0 && enemyList.Count < totalEnemies) {
             for (int i = 0; i < enemiesPerSpawn; i++) {
-                if (enemiesOnScreen < maxEnemiesOnScreen) {
+                if (enemyList.Count < maxEnemiesOnScreen) {
                     int randomNumber = Random.Range(0, 3);
                     GameObject newEnemy = Instantiate(enemies[randomNumber]) as GameObject;
                     newEnemy.transform.position = spawnPoint.transform.position;
-                    enemiesOnScreen++;
                 }
             }
 
