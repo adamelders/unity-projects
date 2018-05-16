@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Tower : MonoBehaviour {
@@ -20,7 +21,7 @@ public class Tower : MonoBehaviour {
 	void Update () {
         attackCounter -= Time.deltaTime;
 
-        if (targetEnemy == null) {
+        if (targetEnemy == null || targetEnemy.IsDead) {
             Enemy nearestEnemy = GetNearestEnemyInRange();
             if (nearestEnemy != null &&
                 Vector2.Distance(transform.localPosition, nearestEnemy.transform.localPosition) <= attackRadius) {
@@ -78,7 +79,7 @@ public class Tower : MonoBehaviour {
         return Mathf.Abs(Vector2.Distance(transform.localPosition, thisEnemy.transform.localPosition));
     }
 
-    IEnumerator<Projectile> MoveProjectile(Projectile projectile) {
+    IEnumerator MoveProjectile(Projectile projectile) {
         while(GetTargetDistance(targetEnemy) > 0.20f && projectile != null && targetEnemy != null) {
             Vector3 dir = targetEnemy.transform.localPosition - transform.localPosition;
             float angleDirection = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
