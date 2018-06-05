@@ -1,12 +1,15 @@
 fileFormatVersion: 2
 guid: d12986812954c3647bbffad49da62d23
-timeCreated: 1525761065
+timeCreated: 1528166898
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: rockTower
     21300002: castleTower
     21300004: knightTower
+    21300006: scoreboard
+    21300008: playButton
+    21300010: towerDisplay
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -114,6 +117,45 @@ TextureImporter:
         y: 19
         width: 172
         height: 212
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: scoreboard
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 1184
+        width: 250
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: playButton
+      rect:
+        serializedVersion: 2
+        x: 1235
+        y: 1417
+        width: 377
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: towerDisplay
+      rect:
+        serializedVersion: 2
+        x: 1543
+        y: 2263
+        width: 69
+        height: 73
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

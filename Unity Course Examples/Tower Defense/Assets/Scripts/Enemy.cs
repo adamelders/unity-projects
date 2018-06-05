@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour {
     [SerializeField] private Transform[] waypoints;
     [SerializeField] private float navigationUpdate;
     [SerializeField] private int healthPoints;
+    [SerializeField] private int rewardAmount;
 
     private int target = 0;
     private Transform enemy;
