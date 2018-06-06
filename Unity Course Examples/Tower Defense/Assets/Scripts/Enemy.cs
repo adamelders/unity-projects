@@ -51,7 +51,10 @@ public class Enemy : MonoBehaviour {
         if (other.tag == "Checkpoint")
             target++;
         else if (other.tag == "Finish") {
+            GameManager.Instance.RoundEscaped += 1;
+            GameManager.Instance.TotalEscaped += 1;
             GameManager.Instance.UnregisterEnemy(this);
+            GameManager.Instance.IsWaveOver();
         }
         else if (other.tag == "Projectile") {
             Projectile newP = other.gameObject.GetComponent<Projectile>();
@@ -63,9 +66,11 @@ public class Enemy : MonoBehaviour {
     public void EnemyHit(int hitPoints) {
         if ((healthPoints - hitPoints) > 0) {
             healthPoints -= hitPoints;
+            GameManager.Instance.AudioSource.PlayOneShot(SoundManager.Instance.Hit);
             animator.Play("Hurt"); // Play Hurt animation
         }
         else {
+            GameManager.Instance.AudioSource.PlayOneShot(SoundManager.Instance.Death);
             animator.SetTrigger("DidDie"); // Play Dying animation
             Die();
         }
@@ -74,5 +79,8 @@ public class Enemy : MonoBehaviour {
     public void Die() {
         isDead = true;
         enemyCollider.enabled = false;
+        GameManager.Instance.TotalKilled += 1;
+        GameManager.Instance.AddMoney(rewardAmount);
+        GameManager.Instance.IsWaveOver();
     }
 }
